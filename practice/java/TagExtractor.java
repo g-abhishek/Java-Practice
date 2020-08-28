@@ -15,17 +15,26 @@ import java.util.regex.Pattern;
  */
 public class TagExtractor {
     public static void main(String[] args){
-       String regex = "\\<[^\\<]+\\>";
+       String regex = "<(.+)>([^<]+)</\\1>";
        Scanner sc = new Scanner(System.in);
        int testCases = sc.nextInt();
        sc.nextLine();
        while(testCases>0){
            String str = sc.nextLine();
+           boolean matchFound = false;
            
            Pattern p = Pattern.compile(regex);
            Matcher matcher = p.matcher(str);
-//           matcher.find();
-           System.out.println(matcher.group(1));
+            while(matcher.find()){
+                System.out.println(matcher.group(0));
+                System.out.println(matcher.group(1));
+                System.out.println(matcher.group(2));
+                matchFound = true;
+            }
+            if(!matchFound){
+                System.out.println("None");
+            }
+           
            testCases--;
        }
     }
